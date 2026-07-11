@@ -1,0 +1,17 @@
+{
+  "name": "donation-sang-backend",
+  "version": "1.0.0",
+  "description": "Backend propre Express + MySQL pour Don de Sang Solidaire.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1",
+    "mysql2": "^3.11.5"
+  }
+}

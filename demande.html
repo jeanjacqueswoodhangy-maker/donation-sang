@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Plateforme locale pour encourager le don de sang, trouver un centre et prendre un engagement de don.">
+    <meta name="theme-color" content="#b51f32">
+    <meta property="og:title" content="Demander du sang - Don de Sang Solidaire">
+    <meta property="og:description" content="Plateforme locale pour encourager le don de sang en Haïti.">
+    <meta property="og:type" content="website">
+    <title>Demander du sang - Don de Sang Solidaire</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
+    <div class="utility-bar">
+      <span>Urgence et orientation: <a href="tel:+50944842854">+509 4484 2854</a></span>
+      <span>Contribution MonCash: <a href="tel:+50944842854">+509 4484 2854</a></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Don de Sang Solidaire">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Don de Sang Solidaire</span>
+      </a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="pourquoi.html">Pourquoi donner</a>
+        <a href="conseils.html">Conseils</a>
+        <a href="conditions.html">Conditions</a>
+        <a href="urgences.html">Besoins urgents</a>
+        <a href="centres.html">Centres</a>
+        <a href="faq.html">FAQ</a>
+        <a class="is-active" href="demande.html">Demander du sang</a>
+        <a href="contact.html">Contacts</a>
+        <a href="admin.html">Admin</a>
+        <a class="nav-cta" href="engagement.html">Je donne</a>
+      </nav>
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Changer de langue">Kreyol</button>
+    </header>
+
+    <main id="main-content">
+<section class="content-section request-section" id="demande">
+        <div class="request-copy">
+          <p class="eyebrow">Besoin d'assistance</p>
+          <h2>Faire une demande de sang</h2>
+          <p>Ce formulaire permet de signaler un besoin. Pour une urgence vitale, contactez directement un hôpital ou les services d'urgence.</p>
+          <div class="urgent-contact-box">
+            <strong>Ligne d'urgence</strong>
+            <a href="tel:+50944842854">+509 4484 2854</a>
+            <span>Disponible pour orienter les demandes prioritaires.</span>
+          </div>
+        </div>
+
+        <form class="request-form" id="requestForm" novalidate>
+          <div class="form-row">
+            <label>Nom du demandeur<input name="requesterName" type="text" autocomplete="name" required pattern="[\p{L}\s'-]+" title="Entrez un nom valide"></label>
+            <label>Téléphone<input name="requesterPhone" type="tel" autocomplete="tel" required pattern="(\+?509)?[2349][0-9]{7}" title="Format: +509 XXXX XXXX"></label>
+          </div>
+          <div class="form-row">
+            <label>Groupe recherché<select name="neededBloodType" required><option value="">Choisir</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option><option>Je ne sais pas</option></select></label>
+            <label>Niveau d'urgence<select name="urgency" required><option value="">Choisir</option><option>Urgent aujourd'hui</option><option>Dans 24-48h</option><option>Planifié</option></select></label>
+          </div>
+          <div class="form-row">
+            <label>Hôpital ou clinique<input name="hospital" type="text" required></label>
+            <label>Ville ou quartier<input name="requestCity" type="text" autocomplete="address-level2" required></label>
+          </div>
+          <label class="full-label">Détails utiles<textarea name="requestDetails" rows="4" placeholder="Exemple: nombre de poches, service, contact médical"></textarea></label>
+          <fieldset class="payment-fieldset">
+            <legend>Paiement ou contribution</legend>
+            <p>Le sang n'est pas vendu. Cette partie sert uniquement à enregistrer des frais approuvés ou une contribution logistique obligatoire.</p>
+            <div class="payment-contact">
+              <strong>MonCash</strong>
+              <a href="tel:+50944842854">+509 4484 2854</a>
+              <span>Après le paiement, entrez la référence de transaction ci-dessous.</span>
+            </div>
+            <div class="form-row">
+              <label>Mode de paiement<select name="paymentMethod" required><option value="">Choisir</option><option>MonCash</option><option>NatCash</option><option>Virement bancaire</option><option>Espèces au bureau</option><option>Aucun paiement</option></select></label>
+              <label>Montant<input name="paymentAmount" type="number" min="0" step="1" placeholder="Exemple: 500"></label>
+            </div>
+            <label class="full-label">Référence de transaction<input name="paymentReference" type="text" placeholder="Code MonCash, reçu ou note interne"></label>
+          </fieldset>
+          <button class="button primary" type="submit">Envoyer la demande</button>
+          <a class="button secondary whatsapp-request-link" id="requestWhatsapp" href="https://wa.me/50944842854" target="_blank" rel="noopener noreferrer">Préparer le message WhatsApp</a>
+          <p class="form-message" id="requestMessage" role="status" aria-live="polite"></p>
+          
+          <section class="receipt-card is-hidden" id="contributionReceipt" aria-label="Reçu de contribution">
+            <div class="receipt-header">
+              <div><p class="eyebrow">Reçu de contribution</p><h3>Don de Sang Solidaire</h3></div>
+              <strong id="receiptNumber">R-0000</strong>
+            </div>
+            <dl class="receipt-details">
+              <div><dt>Nom</dt><dd id="receiptName">-</dd></div>
+              <div><dt>Téléphone</dt><dd id="receiptPhone">-</dd></div>
+              <div><dt>Groupe demandé</dt><dd id="receiptBloodType">-</dd></div>
+              <div><dt>Méthode</dt><dd id="receiptMethod">-</dd></div>
+              <div><dt>Montant</dt><dd id="receiptAmount">-</dd></div>
+              <div><dt>Référence</dt><dd id="receiptReference">-</dd></div>
+              <div><dt>Date</dt><dd id="receiptDate">-</dd></div>
+            </dl>
+            <p class="receipt-note" id="receiptNote">Ce reçu confirme l'enregistrement d'une contribution logistique. Il ne constitue pas une vente de sang.</p>
+            <div class="receipt-print-settings" aria-label="Paramètres d'impression du reçu">
+              <label>Format du reçu
+                <select id="receiptPaper">
+                  <option value="a4">A4</option>
+                  <option value="a5">A5</option>
+                  <option value="ticket">Ticket 80 mm</option>
+                </select>
+              </label>
+              <label class="print-check"><input id="receiptIncludeNote" type="checkbox" checked> Inclure la note</label>
+              <label class="print-check"><input id="receiptAutoPrint" type="checkbox"> Imprimer automatiquement après l'envoi</label>
+            </div>
+            <button class="button secondary" id="printReceipt" type="button">Imprimer le reçu</button>
+          </section>
+        </form>
+    </main>
+
+    <footer class="site-footer">
+      <p>Don de Sang Solidaire</p>
+      <p>En cas d'urgence médicale, contactez directement un centre de santé ou les services competents.</p>
+    </footer>
+
+    <a class="whatsapp-button" href="https://wa.me/50944842854?text=Bonjour%2C%20je%20souhaite%20avoir%20des%20informations%20sur%20le%20don%20de%20sang" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+

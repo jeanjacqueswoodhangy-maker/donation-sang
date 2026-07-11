@@ -1,0 +1,103 @@
+﻿<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Plateforme locale pour encourager le don de sang, trouver un centre et prendre un engagement de don.">
+    <meta name="theme-color" content="#b51f32">
+    <meta property="og:title" content="Administration - Don de Sang Solidaire">
+    <meta property="og:description" content="Plateforme locale pour encourager le don de sang en Haïti.">
+    <meta property="og:type" content="website">
+    <title>Administration - Don de Sang Solidaire</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
+    <div class="utility-bar">
+      <span>Urgence et orientation: <a href="tel:+50944842854">+509 4484 2854</a></span>
+      <span>Contribution MonCash: <a href="tel:+50944842854">+509 4484 2854</a></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Don de Sang Solidaire">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Don de Sang Solidaire</span>
+      </a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="pourquoi.html">Pourquoi donner</a>
+        <a href="conseils.html">Conseils</a>
+        <a href="conditions.html">Conditions</a>
+        <a href="urgences.html">Besoins urgents</a>
+        <a href="centres.html">Centres</a>
+        <a href="faq.html">FAQ</a>
+        <a href="demande.html">Demander du sang</a>
+        <a href="contact.html">Contacts</a>
+        <a class="is-active" href="admin.html">Admin</a>
+        <a class="nav-cta" href="engagement.html">Je donne</a>
+      </nav>
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Changer de langue">Kreyol</button>
+    </header>
+
+    <main id="main-content">
+<section class="content-section admin-section" id="admin">
+        <div class="section-heading">
+          <div><p class="eyebrow">Espace administrateur</p><h2>Suivi local des donneurs et demandes</h2></div>
+          <p class="section-note">Les données sont enregistrées sur le serveur et partagées entre tous les administrateurs.</p>
+        </div>
+
+        <div class="privacy-notice">
+          <strong>Protection des données personnelles</strong>
+          <p>L'accès aux contacts est verrouillé. Les numéros et demandes ne doivent être consultés que par les personnes autorisées.</p>
+        </div>
+
+        <div class="admin-lock" id="adminLock">
+          <label>Code administrateur<input id="adminPasscode" type="password" autocomplete="current-password" placeholder="Entrer le code" maxlength="10" inputmode="numeric"></label>
+          <button class="button primary" id="unlockAdmin" type="button">Déverrouiller</button>
+          <p class="form-message" id="adminLockMessage" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="admin-private is-locked" id="adminPrivate">
+          <div class="admin-controls">
+            <label>Filtrer par groupe sanguin<select id="adminBloodFilter"><option value="">Tous les groupes</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option><option>Je ne sais pas</option></select></label>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="button secondary" id="lockAdmin" type="button">Verrouiller</button>
+              <button class="button secondary" id="clearAdminData" type="button">Effacer les données</button>
+              <button class="button secondary" id="exportData" type="button">Exporter</button>
+            </div>
+          </div>
+
+          <div class="admin-summary" aria-label="Résumé administrateur">
+            <article><strong id="donorCount">0</strong><span>donneurs inscrits</span></article>
+            <article><strong id="requestCount">0</strong><span>demandes reçues</span></article>
+            <article><strong id="matchCount">0</strong><span>donneurs compatibles</span></article>
+          </div>
+
+          <div class="admin-panels">
+            <article>
+              <h3>Promesses de don</h3>
+              <div class="table-wrap">
+                <table><thead><tr><th>Nom</th><th>Téléphone</th><th>Groupe</th><th>Ville</th></tr></thead><tbody id="donorTable"></tbody></table>
+              </div>
+            </article>
+            <article>
+              <h3>Demandes de sang</h3>
+              <div class="table-wrap">
+                <table><thead><tr><th>Nom</th><th>Téléphone</th><th>Groupe</th><th>Urgence</th><th>Paiement</th></tr></thead><tbody id="requestTable"></tbody></table>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Don de Sang Solidaire</p>
+      <p>En cas d'urgence médicale, contactez directement un centre de santé ou les services competents.</p>
+    </footer>
+
+    <a class="whatsapp-button" href="https://wa.me/50944842854?text=Bonjour%2C%20je%20souhaite%20avoir%20des%20informations%20sur%20le%20don%20de%20sang" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <script src="script.js"></script>
+  </body>
+</html>
