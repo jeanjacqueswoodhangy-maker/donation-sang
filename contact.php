@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Plateforme locale pour encourager le don de sang, trouver un centre et prendre un engagement de don.">
     <meta name="theme-color" content="#b51f32">
-    <meta property="og:title" content="Conseils - Don de Sang Solidaire">
+    <meta property="og:title" content="Contacts - Don de Sang Solidaire">
     <meta property="og:description" content="Plateforme locale pour encourager le don de sang en Haïti.">
     <meta property="og:type" content="website">
-    <title>Conseils - Don de Sang Solidaire</title>
+    <title>Contacts - Don de Sang Solidaire</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -19,37 +19,36 @@
       <span>Contribution MonCash: <a href="tel:+50944842854">+509 4484 2854</a></span>
     </div>
 
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Don de Sang Solidaire">
+     <header class="site-header">
+      <a class="brand" href="index.php" aria-label="Don de Sang Solidaire">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Don de Sang Solidaire</span>
       </a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <a href="index.html">Accueil</a>
-        <a href="pourquoi.html">Pourquoi donner</a>
-        <a class="is-active" href="conseils.html">Conseils</a>
-        <a href="conditions.html">Conditions</a>
-        <a href="urgences.html">Besoins urgents</a>
-        <a href="centres.html">Centres</a>
-        <a href="faq.html">FAQ</a>
-        <a href="demande.html">Demander du sang</a>
-        <a href="contact.html">Contacts</a>
-        <a href="admin.html">Admin</a>
-        <a class="nav-cta" href="engagement.html">Je donne</a>
+        <a class="is-active" href="index.php">Accueil</a>
+        <a href="pourquoi.php">Pourquoi donner</a>
+        <a href="conseils.php">Conseils</a>
+        <a href="conditions.php">Conditions</a>
+        <a href="urgences.php">Besoins urgents</a>
+        <a href="centres.php">Centres</a>
+        <a href="faq.php">FAQ</a>
+        <a href="demande.php">Demander du sang</a>
+        <a href="contact.php">Contacts</a>
+        <a href="admin.php">Admin</a>
+        <a class="nav-cta" href="engagement.php">Je donne</a>
       </nav>
       <button class="language-toggle" id="languageToggle" type="button" aria-label="Changer de langue">Kreyol</button>
     </header>
-
     <main id="main-content">
-<section class="content-section tips-section" id="conseils">
+<section class="content-section contact-section" id="contact">
         <div class="section-heading">
-          <div><p class="eyebrow">Conseils pratiques</p><h2>Bien se préparer avant et après le don</h2></div>
-          <p class="section-note">Ces conseils aident les donneurs à arriver plus confiants et mieux préparés.</p>
+          <div><p class="eyebrow">Contacts utiles</p><h2>Téléphones et emails pour les donneurs</h2></div>
+          <p class="section-note">Remplacez ces coordonnées par celles de votre équipe ou de votre centre.</p>
         </div>
-        <div class="tips-grid">
-          <article><strong>Avant le don</strong><ul><li>Dormir suffisamment la veille.</li><li>Manger un repas léger, sans excès de gras.</li><li>Boire de l'eau avant de venir.</li></ul></article>
-          <article><strong>Pendant la visite</strong><ul><li>Signaler tout malaise ou traitement médical.</li><li>Rester détendu pendant le prélèvement.</li><li>Suivre les indications de l'équipe.</li></ul></article>
-          <article><strong>Après le don</strong><ul><li>Prendre la collation proposée.</li><li>Éviter les efforts physiques importants.</li><li>Boire régulièrement dans la journée.</li></ul></article>
+        <div class="contact-grid">
+          <article><strong>Coordination des dons</strong><a href="tel:+50944842854">+509 4484 2854</a><a href="mailto:dons@dondesang.ht">dons@dondesang.ht</a></article>
+          <article><strong>Demandes urgentes</strong><a href="tel:+50944842854">+509 4484 2854</a><a href="mailto:urgence@dondesang.ht">urgence@dondesang.ht</a></article>
+          <article><strong>Campagnes et partenariats</strong><a href="tel:+50944842854">+509 4484 2854</a><a href="mailto:campagnes@dondesang.ht">campagnes@dondesang.ht</a></article>
         </div>
       </section>
     </main>

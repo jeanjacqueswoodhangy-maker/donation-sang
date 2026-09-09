@@ -14,7 +14,7 @@ const CONFIG = {
   },
   emergencyPhone: "50944842854",
   moncashPhone: "50944842854",
-  apiUrl: "http://localhost:3000/api"
+  apiUrl: "."
 };
 
 
@@ -403,8 +403,8 @@ function mapApiRequest(row) {
 async function exportData() {
   try {
     const [apiDonors, apiRequests] = await Promise.all([
-      fetchFromApi("/donors"),
-      fetchFromApi("/requests")
+      fetchFromApi("/donors.php"),
+      fetchFromApi("/requests.php")
     ]);
     const data = {
       donors: apiDonors ? apiDonors.map(mapApiDonor) : readRecords(CONFIG.storageKeys.donors),
@@ -678,8 +678,8 @@ async function renderAdmin() {
   if (!DOM.admin.counts.donors || !DOM.admin.counts.requests || !DOM.admin.counts.matches) return;
 
   const [apiDonors, apiRequests] = await Promise.all([
-    fetchFromApi("/donors"),
-    fetchFromApi("/requests")
+    fetchFromApi("/donors.php"),
+    fetchFromApi("/requests.php")
   ]);
 
   const donors = apiDonors ? apiDonors.map(mapApiDonor) : readRecords(CONFIG.storageKeys.donors);
@@ -795,7 +795,7 @@ function initEventListeners() {
     if (!isValidHaïtianPhone(phone)) { announceMessage(DOM.formMessage, localize("Veuillez entrer un numéro haïtien valide.", "Tanpri antre yon nimewo ayisyen valab."), "assertive"); DOM.formMessage.style.color = "var(--red)"; return; }
     const name = String(fd.get("name")||"").trim();
     const donorRecord = { name, phone, bloodType: fd.get("bloodType"), city: fd.get("city"), availability: fd.get("availability"), createdAt: new Date().toLocaleString("fr-FR") };
-    await saveToApi("/donors", donorRecord);
+    await saveToApi("/donors.php", donorRecord);
     if (saveRecord(CONFIG.storageKeys.donors, donorRecord)) {
       renderAdmin();
       announceMessage(DOM.formMessage, localize(`${name.split(" ")[0]||"Merci"}, promesse sauvegardée.`, `${name.split(" ")[0]||"Mèsi"}, pwomès anrejistre.`));
@@ -803,22 +803,24 @@ function initEventListeners() {
     }
   });
 
-  DOM.requestForm?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const fd = new FormData(DOM.requestForm);
-    const phone = String(fd.get("requesterPhone")||"").trim();
-    if (!isValidHaïtianPhone(phone)) { announceMessage(DOM.requestMessage, localize("Veuillez entrer un numéro haïtien valide.", "Tanpri antre yon nimewo ayisyen valab."), "assertive"); DOM.requestMessage.style.color = "var(--red)"; return; }
-    const name = String(fd.get("requesterName")||"").trim();
-    const blood = fd.get("neededBloodType") || "le groupe demandé";
-    const req = { requesterName: name, requesterPhone: phone, neededBloodType: blood, urgency: fd.get("urgency"), hospital: fd.get("hospital"), requestCity: fd.get("requestCity"), requestDetails: fd.get("requestDetails"), paymentMethod: fd.get("paymentMethod"), paymentAmount: fd.get("paymentAmount"), paymentReference: fd.get("paymentReference"), paymentStatus: buildPaymentStatus(fd), receiptNumber: createReceiptNumber(), createdAt: new Date().toLocaleString("fr-FR") };
-    await saveToApi("/requests", req);
-    if (saveRecord(CONFIG.storageKeys.requests, req)) {
-      renderAdmin(); renderReceipt(req);
-      DOM.requestWhatsapp.href = `https://wa.me/${CONFIG.emergencyPhone}?text=${encodeURIComponent(buildWhatsappMessage(req))}`;
-      announceMessage(DOM.requestMessage, localize(`${name.split(" ")[0]||"Merci"}, demande sauvegardée.`, `${name.split(" ")[0]||"Mèsi"}, demann anrejistre.`));
-      DOM.requestMessage.style.color = "var(--teal)"; DOM.requestForm.reset();
-    }
-  });
+  if (DOM.requestForm && !DOM.requestForm.dataset.serverMultipart) {
+    DOM.requestForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      const fd = new FormData(DOM.requestForm);
+      const phone = String(fd.get("requesterPhone")||"").trim();
+      if (!isValidHaïtianPhone(phone)) { announceMessage(DOM.requestMessage, localize("Veuillez entrer un numéro haïtien valide.", "Tanpri antre yon nimewo ayisyen valab."), "assertive"); DOM.requestMessage.style.color = "var(--red)"; return; }
+      const name = String(fd.get("requesterName")||"").trim();
+      const blood = fd.get("neededBloodType") || "le groupe demandé";
+      const req = { requesterName: name, requesterPhone: phone, neededBloodType: blood, urgency: fd.get("urgency"), hospital: fd.get("hospital"), requestCity: fd.get("requestCity"), requestDetails: fd.get("requestDetails"), paymentMethod: fd.get("paymentMethod"), paymentAmount: fd.get("paymentAmount"), paymentReference: fd.get("paymentReference"), paymentStatus: buildPaymentStatus(fd), receiptNumber: createReceiptNumber(), createdAt: new Date().toLocaleString("fr-FR") };
+      await saveToApi("/requests.php", req);
+      if (saveRecord(CONFIG.storageKeys.requests, req)) {
+        renderAdmin(); renderReceipt(req);
+        DOM.requestWhatsapp.href = `https://wa.me/${CONFIG.emergencyPhone}?text=${encodeURIComponent(buildWhatsappMessage(req))}`;
+        announceMessage(DOM.requestMessage, localize(`${name.split(" ")[0]||"Merci"}, demande sauvegardée.`, `${name.split(" ")[0]||"Mèsi"}, demann anrejistre.`));
+        DOM.requestMessage.style.color = "var(--teal)"; DOM.requestForm.reset();
+      }
+    });
+  }
 
   DOM.requestForm?.addEventListener("input", () => {
     const fd = new FormData(DOM.requestForm);
@@ -828,43 +830,45 @@ function initEventListeners() {
   DOM.receiptPaper?.addEventListener("change", () => { applyReceiptPrintSettings(); saveReceiptPreferences(); });
   DOM.receiptAutoPrint?.addEventListener("change", saveReceiptPreferences);
   DOM.printReceipt?.addEventListener("click", printReceiptOnly);
-  DOM.admin.bloodFilter?.addEventListener("change", renderAdmin);
-  DOM.admin.clearData?.addEventListener("click", async () => {
-    if (!state.adminUnlocked || !confirm(localize("Effacer toutes les données?", "Efase tout done?"))) return;
-    localStorage.removeItem(CONFIG.storageKeys.donors); localStorage.removeItem(CONFIG.storageKeys.requests);
-    const [donorsDeleted, requestsDeleted] = await Promise.all([
-      deleteFromApi("/donors"),
-      deleteFromApi("/requests")
-    ]);
-    await renderAdmin();
-    if (donorsDeleted && requestsDeleted) {
-      announceMessage(DOM.admin.message, localize("Données effacées.", "Done efase."));
-      DOM.admin.message.style.color = "var(--teal)";
-    } else {
-      announceMessage(DOM.admin.message, localize(
-        "Données locales effacées, mais le serveur n'a pas pu être joint.",
-        "Done lokal efase, men nou pa t ka rive jwenn sèvè a."
-      ), "assertive");
-      DOM.admin.message.style.color = "var(--red)";
-    }
-  });
-  DOM.admin.exportData?.addEventListener("click", async () => { if (!state.adminUnlocked) return; if (await exportData()) announceMessage(DOM.admin.message, localize("Export réussi !", "Ekspò reyisi !")); });
+  if (!window.DON_SANG_SERVER_ADMIN) {
+    DOM.admin.bloodFilter?.addEventListener("change", renderAdmin);
+    DOM.admin.clearData?.addEventListener("click", async () => {
+      if (!state.adminUnlocked || !confirm(localize("Effacer toutes les données?", "Efase tout done?"))) return;
+      localStorage.removeItem(CONFIG.storageKeys.donors); localStorage.removeItem(CONFIG.storageKeys.requests);
+      const [donorsDeleted, requestsDeleted] = await Promise.all([
+        deleteFromApi("/donors.php"),
+        deleteFromApi("/requests.php")
+      ]);
+      await renderAdmin();
+      if (donorsDeleted && requestsDeleted) {
+        announceMessage(DOM.admin.message, localize("Données effacées.", "Done efase."));
+        DOM.admin.message.style.color = "var(--teal)";
+      } else {
+        announceMessage(DOM.admin.message, localize(
+          "Données locales effacées, mais le serveur n'a pas pu être joint.",
+          "Done lokal efase, men nou pa t ka rive jwenn sèvè a."
+        ), "assertive");
+        DOM.admin.message.style.color = "var(--red)";
+      }
+    });
+    DOM.admin.exportData?.addEventListener("click", async () => { if (!state.adminUnlocked) return; if (await exportData()) announceMessage(DOM.admin.message, localize("Export réussi !", "Ekspò reyisi !")); });
 
-  DOM.admin.unlockBtn?.addEventListener("click", () => {
-    if (simpleHash(DOM.admin.passcode.value.trim()) === CONFIG.adminHash) {
-      state.adminUnlocked = true; state.adminAttempts = 0;
-      DOM.admin.privateSection.classList.remove("is-locked"); DOM.admin.passcode.value = "";
-      announceMessage(DOM.admin.message, localize("Espace déverrouillé.", "Espas debloke.")); DOM.admin.message.style.color = "var(--teal)"; renderAdmin(); return;
-    }
-    state.adminAttempts++; sessionStorage.setItem("admin_attempts", state.adminAttempts.toString());
-    if (state.adminAttempts >= CONFIG.maxAdminAttempts) { DOM.admin.unlockBtn.disabled = true; announceMessage(DOM.admin.message, localize("Trop de tentatives. Rechargez.", "Twòp tantativ. Rechaje."), "assertive"); DOM.admin.message.style.color = "var(--red)"; return; }
-    announceMessage(DOM.admin.message, localize("Code incorrect.", "Kòd la pa bon."), "assertive"); DOM.admin.message.style.color = "var(--red)";
-  });
+    DOM.admin.unlockBtn?.addEventListener("click", () => {
+      if (simpleHash(DOM.admin.passcode.value.trim()) === CONFIG.adminHash) {
+        state.adminUnlocked = true; state.adminAttempts = 0;
+        DOM.admin.privateSection.classList.remove("is-locked"); DOM.admin.passcode.value = "";
+        announceMessage(DOM.admin.message, localize("Espace déverrouillé.", "Espas debloke.")); DOM.admin.message.style.color = "var(--teal)"; renderAdmin(); return;
+      }
+      state.adminAttempts++; sessionStorage.setItem("admin_attempts", state.adminAttempts.toString());
+      if (state.adminAttempts >= CONFIG.maxAdminAttempts) { DOM.admin.unlockBtn.disabled = true; announceMessage(DOM.admin.message, localize("Trop de tentatives. Rechargez.", "Twòp tantativ. Rechaje."), "assertive"); DOM.admin.message.style.color = "var(--red)"; return; }
+      announceMessage(DOM.admin.message, localize("Code incorrect.", "Kòd la pa bon."), "assertive"); DOM.admin.message.style.color = "var(--red)";
+    });
 
-  DOM.admin.lockBtn?.addEventListener("click", () => {
-    state.adminUnlocked = false; DOM.admin.privateSection.classList.add("is-locked"); renderAdmin();
-    announceMessage(DOM.admin.message, localize("Espace verrouillé.", "Espas fèmen."));
-  });
+    DOM.admin.lockBtn?.addEventListener("click", () => {
+      state.adminUnlocked = false; DOM.admin.privateSection.classList.add("is-locked"); renderAdmin();
+      announceMessage(DOM.admin.message, localize("Espace verrouillé.", "Espas fèmen."));
+    });
+  }
 
   DOM.languageToggle?.addEventListener("click", () => setLanguage(document.documentElement.dataset.language === "ht" ? "fr" : "ht"));
   DOM.faqItems.forEach(item => item.addEventListener("toggle", () => { if (item.open) DOM.faqItems.filter(i => i !== item).forEach(i => i.open = false); }));

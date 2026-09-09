@@ -19,23 +19,23 @@
       <span>Contribution MonCash: <a href="tel:+50944842854">+509 4484 2854</a></span>
     </div>
 
-    <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Don de Sang Solidaire">
+     <header class="site-header">
+      <a class="brand" href="index.php" aria-label="Don de Sang Solidaire">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Don de Sang Solidaire</span>
       </a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <a href="index.html">Accueil</a>
-        <a href="pourquoi.html">Pourquoi donner</a>
-        <a class="is-active" href="conseils.html">Conseils</a>
-        <a href="conditions.html">Conditions</a>
-        <a href="urgences.html">Besoins urgents</a>
-        <a href="centres.html">Centres</a>
-        <a href="faq.html">FAQ</a>
-        <a href="demande.html">Demander du sang</a>
-        <a href="contact.html">Contacts</a>
-        <a href="admin.html">Admin</a>
-        <a class="nav-cta" href="engagement.html">Je donne</a>
+        <a class="is-active" href="index.php">Accueil</a>
+        <a href="pourquoi.php">Pourquoi donner</a>
+        <a href="conseils.php">Conseils</a>
+        <a href="conditions.php">Conditions</a>
+        <a href="urgences.php">Besoins urgents</a>
+        <a href="centres.php">Centres</a>
+        <a href="faq.php">FAQ</a>
+        <a href="demande.php">Demander du sang</a>
+        <a href="contact.php">Contacts</a>
+        <a href="admin.php">Admin</a>
+        <a class="nav-cta" href="engagement.php">Je donne</a>
       </nav>
       <button class="language-toggle" id="languageToggle" type="button" aria-label="Changer de langue">Kreyol</button>
     </header>

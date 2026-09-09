@@ -20,28 +20,28 @@
     </div>
 
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Don de Sang Solidaire">
+      <a class="brand" href="index.php" aria-label="Don de Sang Solidaire">
         <span class="brand-mark" aria-hidden="true"></span>
         <span>Don de Sang Solidaire</span>
       </a>
       <nav class="main-nav" aria-label="Navigation principale">
-        <a class="is-active" href="index.html">Accueil</a>
-        <a href="pourquoi.html">Pourquoi donner</a>
-        <a href="conseils.html">Conseils</a>
-        <a href="conditions.html">Conditions</a>
-        <a href="urgences.html">Besoins urgents</a>
-        <a href="centres.html">Centres</a>
-        <a href="faq.html">FAQ</a>
-        <a href="demande.html">Demander du sang</a>
-        <a href="contact.html">Contacts</a>
-        <a href="admin.html">Admin</a>
-        <a class="nav-cta" href="engagement.html">Je donne</a>
+        <a class="is-active" href="index.php">Accueil</a>
+        <a href="pourquoi.php">Pourquoi donner</a>
+        <a href="conseils.php">Conseils</a>
+        <a href="conditions.php">Conditions</a>
+        <a href="urgences.php">Besoins urgents</a>
+        <a href="centres.php">Centres</a>
+        <a href="faq.php">FAQ</a>
+        <a href="demande.php">Demander du sang</a>
+        <a href="contact.php">Contacts</a>
+        <a href="admin.php">Admin</a>
+        <a class="nav-cta" href="engagement.php">Je donne</a>
       </nav>
       <button class="language-toggle" id="languageToggle" type="button" aria-label="Changer de langue">Kreyol</button>
     </header>
 
     <main id="main-content">
-<section class="hero" id="accueil">
+      <section class="hero" id="accueil">
         <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
           <p class="eyebrow">Campagne communautaire</p>
@@ -51,9 +51,9 @@
             pour être recontacté lors de la prochaine campagne.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="engagement.html">Prendre engagement</a>
-            <a class="button secondary" href="demande.html">Demander du sang</a>
-            <a class="button secondary" href="centres.html">Voir les centres</a>
+            <a class="button primary" href="engagement.php">Prendre engagement</a>
+            <a class="button secondary" href="demande.php">Demander du sang</a>
+            <a class="button secondary" href="centres.php">Voir les centres</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="Resume de la campagne">
@@ -70,13 +70,14 @@
           </ul>
         </aside>
       </section>
-<section class="stats-band" aria-label="Chiffres importants">
+
+      <section class="stats-band" aria-label="Chiffres importants">
         <div><strong>10 min</strong><span>pour le prélèvement</span></div>
         <div><strong>56 jours</strong><span>entre deux dons</span></div>
         <div><strong>18-65 ans</strong><span>âge général recommandé</span></div>
       </section>
 
-<section class="content-section process-section" id="processus">
+      <section class="content-section process-section" id="processus">
         <div class="section-heading">
           <div><p class="eyebrow">Fonctionnement</p><h2>Un parcours simple et organisé</h2></div>
           <p class="section-note">Le site aide l'équipe à recevoir, vérifier et suivre les demandes sans perdre les informations importantes.</p>
@@ -98,7 +99,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
-
-
-
